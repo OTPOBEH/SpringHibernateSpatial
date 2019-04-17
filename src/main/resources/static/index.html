@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Goldfinger</title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -16,7 +16,10 @@
 
 
     <style>
-        #mapid { height: 500px; width: 600px;}
+        #mapid {
+            height: 500px;
+            width: 600px;
+        }
     </style>
 
 </head>
@@ -26,31 +29,27 @@
 <div id="mapid"></div>
 
 
-
 <script>
 
 
-    var mymap = L.map('mapid').setView([34, -98], 13);
+    var mymap = L.map('mapid').setView([42.7, 25.5], 7);
 
     mymap.on("dblclick", function (ev) {
         var latlng = mymap.mouseEventToLatLng(ev.originalEvent);
 
         $.ajax({
-            url: "http://localhost:8080/map/getByCoords",
-            type: "post",
-            dataType: "json",
+            url: "http://localhost:8080/soil/getByCoords",
+            type: "POST",
+            dataType: "text",
             contentType: "application/json",
             data: JSON.stringify({
-                "x" : latlng.lng,
-                "y" : latlng.lat
+                "x": latlng.lng,
+                "y": latlng.lat
             }),
-            success: function (data) {
-                var latlngs = [];
-                for (let i = 0; i < data.length; i++) {
-                    latlngs.push([data[i].y, data[i].x]);
-                }
-                let polygon = L.polygon(latlngs, {color:'red'});
-                polygon.addTo(mymap);
+            success: function (response) {
+                var obj = $.parseJSON(response);
+                console.log(obj.sqKm);
+                omnivore.wkt.parse(obj.polygon).addTo(mymap);
             }
         });
     });
@@ -66,25 +65,17 @@
     mymap.doubleClickZoom.disable();
 
     var popup = L.popup();
+
     function onMapClick(e) {
         popup
             .setLatLng(e.latlng)
             .setContent(e.latlng.toString())
             .openOn(mymap);
     }
+
     mymap.on('dblclick', onMapClick);
 
-
-    L.geoJSON(geojsonFeature).addTo(map);
-
-
-
-
 </script>
-
-
-
-
-
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
 </body>
 </html>

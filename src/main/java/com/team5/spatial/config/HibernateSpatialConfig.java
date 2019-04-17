@@ -1,4 +1,4 @@
-package com.zakobah.spatial.config;
+package com.team5.spatial.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +29,7 @@ public class HibernateSpatialConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("com.zakobah.spatial.models");
+        sessionFactory.setPackagesToScan("com.team5.spatial.soil.models");
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;

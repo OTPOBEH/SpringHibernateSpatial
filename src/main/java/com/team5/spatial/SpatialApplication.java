@@ -1,4 +1,4 @@
-package com.zakobah.spatial;
+package com.team5.spatial;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

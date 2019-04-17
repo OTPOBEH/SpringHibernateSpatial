@@ -1,4 +1,4 @@
-package com.zakobah.spatial;
+package com.team5.spatial;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

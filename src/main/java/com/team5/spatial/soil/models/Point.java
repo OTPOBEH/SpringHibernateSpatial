@@ -1,6 +1,6 @@
-package com.zakobah.spatial;
+package com.team5.spatial.soil.models;
 
-public class DoublePoint {
+public class Point {
     private double x;
     private double y;
 
